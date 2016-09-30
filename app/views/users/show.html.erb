@@ -1,0 +1,14 @@
+<h1>Profile</h1>
+<p><%= @user.name %></p>
+<% if logged_in? %>
+<p>
+	<%= link_to 'delete account', user_path(@user), method: :delete, 
+	   	data: { confirm: 'Are you sure?' } %>
+</p>
+<p>
+	<%= link_to 'Log out', logout_path, method: :delete %>
+</p>
+<% end %>
+<p>
+	<%= link_to 'Back to home page', root_url %>
+</p>

@@ -1,0 +1,23 @@
+<h1>Welcome <%= @user.name %></h1>
+<%= link_to 'log out', admin_logout_path, method: :delete, 
+			data: { confirm: 'Are you sure?' } %>
+<% if !@moderators.empty? %>
+<h2>List of moderators :</h2>
+<table>
+	<tr>
+		<th>username</th>
+	</tr>
+	<% @moderators.each do |usr| %>
+		<% if usr.activated %>
+			<% button_name = 'disactivate' %>
+		<% else %>
+			<% button_name = 'activate' %>
+		<% end %>	
+		<tr>
+			<td><%= usr.name %></td>
+			<td><%= button_to button_name, {:controller => 'admin', :action => 'user_update'}, 
+					params: {:id => usr.id} %></td>
+		</tr>
+	<% end %>
+</table>
+<% end %>

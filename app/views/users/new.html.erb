@@ -1,0 +1,42 @@
+<h1>Sign up</h1>
+
+<%= form_for @user do |f| %>
+  <% if @user.errors.any? %>
+  <div id="error_explanation">
+    <div class="alert alert-danger">
+      The form contains <%= pluralize(@user.errors.count, 'error') %>  
+    </div>
+    <ul>
+      <%= @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>  
+  </div>
+  <% end %>
+  <p>
+	<%= f.label :name %><br>
+	<%= f.text_field :name %>
+  </p>	
+  <p>
+	<%= f.label :email %><br>
+	<%= f.email_field :email %>
+  </p>
+  <p>	
+	<%= f.label :password %><br>
+	<%= f.password_field :password %>
+  </p>
+  <p>
+	<%= f.label :password_confirmation %><br>
+	<%= f.password_field :confirmation %>
+  </p>
+  <p>
+    Choose role to register with <br>
+    <%= f.select :role, ['user', 'moderator'], :selected => 'user' %>
+  </p>
+  <p>
+	<%= f.submit 'Create account' %>
+  </p>
+  <p>
+    Already signed up? So please <%= link_to 'Log in', login_path %>
+  </p>	
+<% end %>	
