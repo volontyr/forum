@@ -49,7 +49,14 @@ class User < ActiveRecord::Base
     self.email_confirmed = true
     self.confirm_token = nil
     save!(:validate => false)
-  end  
+  end 
+
+  def send_password_reset
+    self.password_reset_token = User.generate_token.to_s
+    self.password_reset_sent_at = Time.zone.now
+    save!(:validate => false)
+    UserMailer.password_reset(self).deliver_now
+  end 
 
   private
     def default_values

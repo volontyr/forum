@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'password_resets/new'
+
+  get 'password_resets/edit'
+
   get 'admin/edit'
   post 'admin/edit' => 'admin#user_update' 
   get '/admin'     => 'admin#index'
@@ -17,6 +21,8 @@ Rails.application.routes.draw do
       get :confirm_email
     end
   end
+
+  resources :password_resets
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

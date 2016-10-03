@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160929130009) do
+ActiveRecord::Schema.define(version: 20161003134220) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "messages", force: :cascade do |t|
     t.integer  "theme_id"
@@ -20,8 +23,8 @@ ActiveRecord::Schema.define(version: 20160929130009) do
     t.integer  "user_id"
   end
 
-  add_index "messages", ["theme_id"], name: "index_messages_on_theme_id"
-  add_index "messages", ["user_id"], name: "index_messages_on_user_id"
+  add_index "messages", ["theme_id"], name: "index_messages_on_theme_id", using: :btree
+  add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
   create_table "sections", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -29,7 +32,7 @@ ActiveRecord::Schema.define(version: 20160929130009) do
     t.integer  "user_id"
   end
 
-  add_index "sections", ["user_id"], name: "index_sections_on_user_id"
+  add_index "sections", ["user_id"], name: "index_sections_on_user_id", using: :btree
 
   create_table "themes", force: :cascade do |t|
     t.integer  "section_id"
@@ -38,22 +41,24 @@ ActiveRecord::Schema.define(version: 20160929130009) do
     t.integer  "user_id"
   end
 
-  add_index "themes", ["section_id"], name: "index_themes_on_section_id"
-  add_index "themes", ["user_id"], name: "index_themes_on_user_id"
+  add_index "themes", ["section_id"], name: "index_themes_on_section_id", using: :btree
+  add_index "themes", ["user_id"], name: "index_themes_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "role"
-    t.boolean  "activated",       default: false
-    t.string   "password_digest"
-    t.string   "remember_digest"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.boolean  "email_confirmed", default: false
-    t.string   "confirm_token"
+    t.text     "name"
+    t.text     "email"
+    t.text     "role"
+    t.boolean  "activated",              default: false
+    t.text     "password_digest"
+    t.text     "remember_digest"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.boolean  "email_confirmed",        default: false
+    t.text     "confirm_token"
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
 end
